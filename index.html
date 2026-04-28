@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Ride | Your Ultimate Ride Aggregator</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet Map CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <nav class="sidebar glass-panel">
+            <div class="logo">
+                <div class="logo-icon-wrap">
+                    <i class="fa-solid fa-route"></i>
+                </div>
+                <span>Easy<span class="logo-accent">Ride</span></span>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="active"><a href="#" id="nav-search"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></a></li>
+                <li><a href="#" id="nav-saved"><i class="fa-solid fa-bookmark"></i><span>Saved</span></a></li>
+                <li><a href="#" id="nav-history"><i class="fa-solid fa-clock-rotate-left"></i><span>History</span></a></li>
+                <li><a href="#" id="nav-settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+            </ul>
+            
+            <!-- Profile linked to login -->
+            <a href="login.html" id="profile-link" style="text-decoration: none; color: inherit;">
+                <div class="user-profile">
+                    <div class="avatar-wrap">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="User Profile" class="avatar">
+                        <span class="status-dot"></span>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name" id="nav-user-name">Guest User</span>
+                        <span class="user-status" id="nav-user-status">Click to Login</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size:0.75rem; margin-left:auto;"></i>
+                </div>
+            </a>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Section -->
+            <header class="top-header">
+                <div class="header-text">
+                    <h1>Where to? <span class="wave">👋</span></h1>
+                    <p>Compare and find the best ride in one tap.</p>
+                </div>
+                <div class="header-action">
+                    <button class="btn btn-icon" title="Notifications"><i class="fa-regular fa-bell"></i></button>
+                    <button class="btn btn-icon" title="Menu"><i class="fa-solid fa-bars-staggered"></i></button>
+                </div>
+            </header>
+
+            <!-- Search Area -->
+            <section class="search-section glass-panel">
+                <div class="mode-toggle-group">
+                    <button type="button" class="mode-toggle active" id="mode-ride-btn">
+                        <i class="fa-solid fa-car"></i> Ride
+                    </button>
+                    <button type="button" class="mode-toggle" id="mode-rental-btn">
+                        <i class="fa-solid fa-key"></i> Rentals
+                    </button>
+                </div>
+
+                <form id="search-form" class="search-form">
+                    <div class="input-group" style="position: relative;">
+                        <div class="icon-wrapper">
+                            <i class="fa-solid fa-circle location-icon green" style="font-size:10px;"></i>
+                        </div>
+                        <input type="text" id="pickup" placeholder="Pickup location" value="Indiranagar, Bangalore" autocomplete="off" required>
+                        <ul id="pickup-suggestions" class="suggestions-list"></ul>
+                    </div>
+                    
+                    <div class="route-connector">
+                        <div class="connector-line"></div>
+                        <button type="button" class="swap-btn" title="Swap locations">
+                            <i class="fa-solid fa-arrow-up-arrow-down"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="input-group" style="position: relative;">
+                        <div class="icon-wrapper">
+                            <i class="fa-solid fa-location-dot location-icon red"></i>
+                        </div>
+                        <input type="text" id="dropoff" placeholder="Where do you want to go?" autocomplete="off" required>
+                        <ul id="dropoff-suggestions" class="suggestions-list"></ul>
+                    </div>
+
+                    <div class="date-time-group">
+                        <button type="button" class="btn btn-outline">
+                            <i class="fa-regular fa-calendar"></i> Today
+                        </button>
+                        <label class="time-select-wrap">
+                            <i class="fa-regular fa-clock"></i>
+                            <select id="ride-time" class="time-select" aria-label="Select ride time">
+                                <option value="now">Now</option>
+                                <option value="06:00">06:00 AM</option>
+                                <option value="07:00">07:00 AM</option>
+                                <option value="08:00">08:00 AM</option>
+                                <option value="09:00">09:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="13:00">01:00 PM</option>
+                                <option value="14:00">02:00 PM</option>
+                                <option value="15:00">03:00 PM</option>
+                                <option value="16:00">04:00 PM</option>
+                                <option value="17:00">05:00 PM</option>
+                                <option value="18:00">06:00 PM</option>
+                                <option value="19:00">07:00 PM</option>
+                                <option value="20:00">08:00 PM</option>
+                                <option value="21:00">09:00 PM</option>
+                                <option value="22:00">10:00 PM</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="search-btn">
+                        <i class="fa-solid fa-magnifying-glass"></i> Search Rides
+                    </button>
+                </form>
+
+                <form id="rental-form" class="search-form rental-form hidden">
+                    <div class="input-group">
+                        <div class="icon-wrapper">
+                            <i class="fa-solid fa-suitcase" style="color: var(--accent-primary);"></i>
+                        </div>
+                        <input type="text" id="rental-trip-name" placeholder="Trip name (Weekend Trip)" required>
+                    </div>
+                    <div class="rental-grid">
+                        <div class="input-group">
+                            <div class="icon-wrapper">
+                                <i class="fa-regular fa-calendar" style="color: var(--text-muted);"></i>
+                            </div>
+                            <input type="date" id="rental-date" required>
+                        </div>
+                        <div class="input-group">
+                            <div class="icon-wrapper">
+                                <i class="fa-regular fa-clock" style="color: var(--text-muted);"></i>
+                            </div>
+                            <input type="time" id="rental-time" required>
+                        </div>
+                    </div>
+                    <div class="rental-grid">
+                        <div class="input-group">
+                            <div class="icon-wrapper">
+                                <i class="fa-regular fa-hourglass-half" style="color: var(--text-muted);"></i>
+                            </div>
+                            <select id="rental-duration" class="time-select" required>
+                                <option value="2">2 Hours</option>
+                                <option value="4">4 Hours</option>
+                                <option value="6">6 Hours</option>
+                                <option value="8">8 Hours</option>
+                                <option value="12">12 Hours</option>
+                                <option value="one day">One Day</option>
+                                <option value="two days">Two Days</option>
+                                <option value="three days">Three Days</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <div class="icon-wrapper">
+                                <i class="fa-solid fa-car" style="color: var(--text-muted);"></i>
+                            </div>
+                            <select id="rental-vehicle-type" class="time-select" required>
+                                <option value="SUV">SUV</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="Mini Bus">Mini Bus</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="rental-cost" id="rental-estimated-cost">Estimated Cost: ₹0</div>
+                    <button type="submit" class="btn btn-primary" id="book-rental-btn">
+                        <i class="fa-solid fa-check"></i> Book Rental
+                    </button>
+                </form>
+            </section>
+
+            <!-- Map View -->
+            <section class="map-view-placeholder" id="map-view-section">
+                <div id="map"></div>
+                
+                <div class="map-overlay-content" id="map-placeholder-content">
+                    <div class="map-placeholder-icon">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <p>Enter destination to view map routes</p>
+                    <span>Powered by OpenStreetMap</span>
+                </div>
+            </section>
+        </main>
+
+        <!-- Results Side Panel -->
+        <aside class="results-panel glass-panel" id="results-panel">
+            <div class="results-header">
+                <h2>Available Rides</h2>
+                <div class="sort-filters">
+                    <button class="filter-btn active" data-sort="recommended">⭐ Best</button>
+                    <button class="filter-btn" data-sort="price">💰 Cheapest</button>
+                    <button class="filter-btn" data-sort="time">⚡ Fastest</button>
+                </div>
+                <button class="btn-close" id="close-results"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="loader" id="results-loader">
+                <div class="spinner"></div>
+                <p>Finding the perfect rides...</p>
+            </div>
+
+            <div class="rides-container" id="rides-list">
+                <!-- Ride cards injected via JS -->
+            </div>
+        </aside>
+
+        <!-- Active Booking Panel -->
+        <aside class="active-booking-panel glass-panel" id="active-booking-panel">
+            <div class="booking-header">
+                <div>
+                    <h3>Driver is on the way!</h3>
+                    <p id="booking-eta">Arriving in <span class="highlight">3</span> minutes</p>
+                </div>
+                <button class="btn-close" id="minimize-booking-panel"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            
+            <div class="driver-info">
+                <img src="https://i.pravatar.cc/150?img=12" alt="Driver" class="driver-avatar">
+                <div class="driver-details">
+                    <span class="driver-name">Chintu Ujwal</span>
+                    <span class="driver-rating">⭐ 4.8 · 1,204 trips</span>
+                </div>
+                <div class="vehicle-details">
+                    <span class="vehicle-plate">KA 40 AB 4200</span>
+                    <span class="vehicle-model" id="booking-vehicle">Uber Go (Maruti Swift)</span>
+                </div>
+            </div>
+
+            <div class="driver-location-panel">
+                <div class="driver-location-head">
+                    <span><i class="fa-solid fa-location-dot" style="color:var(--accent-primary);"></i> Driver Live Location</span>
+                    <span id="driver-live-status" class="live-badge">● Live</span>
+                </div>
+                <p id="driver-location-text">Driver is 0.0 km away from pickup</p>
+            </div>
+
+            <div class="booking-actions">
+                <button class="btn btn-outline" id="cancel-booking"><i class="fa-solid fa-xmark"></i> Cancel</button>
+                <button class="btn btn-outline" id="track-driver-btn"><i class="fa-solid fa-crosshairs"></i> Track</button>
+                <button class="btn btn-primary"><i class="fa-solid fa-phone"></i> Call</button>
+            </div>
+        </aside>
+
+        <button class="track-fab btn btn-primary" id="track-fab-btn">
+            <i class="fa-solid fa-location-arrow"></i> Track
+        </button>
+
+        <aside class="utility-panel glass-panel" id="utility-panel">
+            <div class="utility-header">
+                <h3 id="utility-title">Saved Locations</h3>
+                <button class="btn-close" id="close-utility-panel"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="utility-body" id="utility-body"></div>
+        </aside>
+    </div>
+
+    <!-- Leaflet Map JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="./app.js"></script>
+</body>
+</html>

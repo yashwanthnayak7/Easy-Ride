@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Ride | Login & Signup</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="login-style.css">
+</head>
+<body>
+    <!-- Immersive Animated Background -->
+    <div class="dynamic-bg">
+        <div class="color-orb orb-primary"></div>
+        <div class="color-orb orb-secondary"></div>
+        <div class="color-orb orb-tertiary"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <div class="auth-wrapper">
+        <div class="brand-logo">
+            <i class="fa-solid fa-route"></i>
+            <span>Easy Ride</span>
+        </div>
+
+        <div class="scene">
+            <div class="card-container" id="flip-card">
+                
+                <!-- Login Side -->
+                <div class="card-face card-front glass-panel">
+                    <div class="form-header">
+                        <h2>Welcome Back</h2>
+                        <p>Your journey continues here</p>
+                    </div>
+                    <form id="form-login">
+                        <div class="input-group">
+                            <i class="fa-solid fa-user icon"></i>
+                            <input type="text" id="login-username" placeholder=" " required autocomplete="off">
+                            <label>Username</label>
+                            <div class="input-highlight"></div>
+                        </div>
+
+                        <div class="input-group">
+                            <i class="fa-solid fa-lock icon"></i>
+                            <input type="password" id="login-password" placeholder=" " required autocomplete="off">
+                            <label>Password</label>
+                            <div class="input-highlight"></div>
+                        </div>
+
+                        <div class="form-actions">
+                            <label class="remember-me">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-pass">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <span>Sign In</span>
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        </button>
+                    </form>
+                    
+                    <div class="form-footer">
+                        <p>New to Easy Ride? <a href="#" class="register-trigger">Create Account</a></p>
+                    </div>
+                </div>
+
+                <!-- Register Side -->
+                <div class="card-face card-back glass-panel">
+                    <div class="form-header">
+                        <h2>Join Easy Ride</h2>
+                        <p>Sign up to book your first ride</p>
+                    </div>
+                    <form id="form-register">
+                        <div class="input-group">
+                            <i class="fa-solid fa-user icon"></i>
+                            <input type="text" id="signup-username" placeholder=" " required autocomplete="off">
+                            <label>Username</label>
+                            <div class="input-highlight"></div>
+                        </div>
+
+                        <div class="input-group">
+                            <i class="fa-solid fa-envelope icon"></i>
+                            <input type="email" id="signup-email" placeholder=" " required autocomplete="off">
+                            <label>Email Address</label>
+                            <div class="input-highlight"></div>
+                        </div>
+
+                        <div class="input-group">
+                            <i class="fa-solid fa-lock icon"></i>
+                            <input type="password" id="signup-password" placeholder=" " required autocomplete="off">
+                            <label>Password</label>
+                            <div class="input-highlight"></div>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <span>Sign Up</span>
+                            <i class="fa-solid fa-user-plus"></i>
+                        </button>
+                    </form>
+                    
+                    <div class="form-footer">
+                        <p>Already have an account? <a href="#" class="login-trigger">Sign In</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container"></div>
+
+    <script src="login.js"></script>
+</body>
+</html>

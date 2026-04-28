@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Ride | Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./profile.css">
+</head>
+<body>
+    <main class="profile-page">
+        <section class="profile-card glass-panel">
+            <div class="profile-head">
+                <img src="https://i.pravatar.cc/200?img=11" alt="Profile avatar" class="profile-avatar">
+                <div>
+                    <h1 id="profile-username">Guest</h1>
+                    <p id="profile-email">Not available</p>
+                </div>
+            </div>
+
+            <div class="profile-grid">
+                <div class="profile-stat glass-panel">
+                    <span class="label">Saved Locations</span>
+                    <strong id="stat-saved">0</strong>
+                </div>
+                <div class="profile-stat glass-panel">
+                    <span class="label">Rides Booked</span>
+                    <strong id="stat-rides">0</strong>
+                </div>
+                <div class="profile-stat glass-panel">
+                    <span class="label">Rentals Booked</span>
+                    <strong id="stat-rentals">0</strong>
+                </div>
+            </div>
+
+            <section class="profile-history glass-panel">
+                <h3>Rental Bookings</h3>
+                <div id="profile-rental-list" class="profile-rental-list"></div>
+            </section>
+
+            <form id="profile-form" class="profile-form">
+                <label>Display Name
+                    <input id="display-name" type="text" placeholder="Your display name">
+                </label>
+                <label>Phone Number
+                    <input id="phone-number" type="text" placeholder="+91...">
+                </label>
+                <label>Bio
+                    <textarea id="bio" rows="3" placeholder="Tell us about yourself"></textarea>
+                </label>
+                <button class="btn btn-primary" type="submit">Save Profile</button>
+            </form>
+
+            <div class="profile-actions">
+                <a href="index.html" class="btn btn-outline"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+                <button id="profile-logout" class="btn btn-outline" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+            </div>
+        </section>
+    </main>
+    <script src="./profile.js"></script>
+</body>
+</html>
