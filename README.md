@@ -1,0 +1,1 @@
+Easy Ride is a modern, premium web-based Ride Aggregator and Booking Platform designed to help users compare, select, and manage their trips effortlessly in one interface. By consolidating multiple transportation services, it simplifies urban mobility into a single, intuitive dashboard.
